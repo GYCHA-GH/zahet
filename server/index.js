@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const cors = require('cors');
 
 const app = express();
-const port = 3001;
+
 app.use(cors());
 
 const pool = new Pool({
@@ -16,11 +16,7 @@ const pool = new Pool({
 
 app.get('/api/data/:table', async (req, res) => {
   const { table } = req.params;
-  const validTables = ['Преподаватели', 'студенты'];
-
-  if (!validTables.includes(table)) {
-    return res.status(400).json({ error: 'Недопустимая таблица' });
-  }
+ 
 
   try {
     const result = await pool.query(`SELECT * FROM vova."${table}"`);
@@ -31,6 +27,4 @@ app.get('/api/data/:table', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`✅ Сервер работает на http://localhost:${port}`);
-});
+
